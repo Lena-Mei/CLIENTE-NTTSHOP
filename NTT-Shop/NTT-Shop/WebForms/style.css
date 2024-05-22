@@ -1,0 +1,79 @@
+﻿/*body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+    margin: 0;
+}
+
+.fixed-header, .fixed-footer {
+    width: 100%;
+    position: fixed;
+    background: #333;
+    padding: 10px 0;
+    color: #fff;
+}
+
+.fixed-header {
+    top: 0;
+}
+
+.fixed-footer {
+    bottom: 0;
+}
+
+a:link, a:visited, a:active {
+    text-decoration: none;
+}
+*/
+.container {
+    width: 80%;
+    margin: 0 auto; /* Center the DIV horizontally */
+}
+    /*
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 7px 25px;
+    display: inline-block;
+}*/
+
+/*
+
+.card {
+    width: 30%;
+    float: left;
+    margin-top: 20px;
+    margin-left: 20px;
+    background-color: red;
+}
+
+
+.card-nombre {
+    font-size: 2rem;
+    color: black;
+    background-color:aqua;
+}
+
+.card-des {
+    font-size: 1.2rem;
+}
+
+.card-2 {
+    width: 100%;
+}
+
+.precio {
+    width: 50%;
+    font-size: 1.5rem;
+    color: brown;
+    float: left;
+    font-weight: bold;
+}
+
+.boton {
+    width: 50%;
+    float: right;
+    height: auto;
+}
+
+*/
