@@ -31,8 +31,15 @@ namespace NTT_Shop.WebForms
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            MostrarAlerts(false, false);
-            MostrarDatos();
+            if (Session["session-id"] != null)
+            {
+                MostrarAlerts(false, false);
+                MostrarDatos();
+            }
+            else
+            {
+                Response.Redirect("IniciarSesion.aspx");
+            }
         }
 
         private void MostrarDatos()

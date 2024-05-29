@@ -19,10 +19,17 @@ namespace NTT_Shop.WebForms
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			if (!IsPostBack && Session["session-producto"] != null)
-			{
-				MostrarProducto();
-			}
+            if (Session["session-id"] != null)
+            {
+                if (!IsPostBack)
+                {
+                    MostrarProducto();
+                }
+            }
+            else
+            {
+                Response.Redirect("IniciarSesion.aspx");
+            }
 		}
 
 		protected void btnAnyadir_Click(object sender, EventArgs e)
