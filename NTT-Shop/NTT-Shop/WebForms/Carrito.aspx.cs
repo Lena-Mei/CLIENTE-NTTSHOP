@@ -19,18 +19,25 @@ namespace NTT_Shop.WebForms
 	
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			if (!IsPostBack)
-			{
-                if(Session["session-carrito"] != null)
+            if (Session["session-id"] != null)
+            {
+                if (!IsPostBack)
                 {
-				    mostrarProducto();
-                    mostrarUsuario();
-                    totalPecio();
+                    if (Session["session-carrito"] != null)
+                    {
+                        mostrarProducto();
+                        mostrarUsuario();
+                        totalPecio();
+                    }
+                    else
+                    {
+                        Response.Redirect("CarritoVacio.aspx");
+                    }
                 }
-                else
-                {
-                    Response.Redirect("CarritoVacio.aspx");
-                }
+            }
+            else
+            {
+                Response.Redirect("IniciarSesion.aspx");
             }
 		}
         private void mostrarUsuario()

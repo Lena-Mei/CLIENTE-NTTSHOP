@@ -17,16 +17,23 @@ namespace NTT_Shop.WebForms
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!IsPostBack)
+            if (Session["session-id"] != null)
             {
-                if (Session["session-dPedido"] != null)
+                if (!IsPostBack)
                 {
-                    mostrarDatos();
+                    if (Session["session-dPedido"] != null)
+                    {
+                        mostrarDatos();
+                    }
+                    else
+                    {
+                        Response.Redirect("Escaparate.aspx");
+                    }
                 }
-                else
-                {
-                    Response.Redirect("Escaparate.aspx");
-                }
+            }
+            else
+            {
+                Response.Redirect("IniciarSesion.aspx");
             }
         }
 

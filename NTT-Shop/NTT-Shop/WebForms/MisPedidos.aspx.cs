@@ -19,18 +19,25 @@ namespace NTT_Shop.WebForms
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack && Session["session-id"] != null)
+            if (Session["session-id"] != null)
             {
-                List<ListaPedido> listaPedido = GetPedidosIdUsuario();
-                if(listaPedido.Count>0)
+                if (!IsPostBack)
                 {
-                    MostrarPedido();
+                    List<ListaPedido> listaPedido = GetPedidosIdUsuario();
+                    if (listaPedido.Count > 0)
+                    {
+                        MostrarPedido();
+                    }
+                    else
+                    {
+
+                        Response.Redirect("SinPedidos.aspx");
+                    }
                 }
-                else
-                {
-                    
-                    Response.Redirect("SinPedidos.aspx");
-                }
+            }
+            else
+            {
+                Response.Redirect("IniciarSesion.aspx");
             }
         }
 

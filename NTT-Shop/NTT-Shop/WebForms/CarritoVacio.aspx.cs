@@ -11,9 +11,16 @@ namespace NTT_Shop.WebForms
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack && Session["session-id"] != null)
+            if (Session["session-id"] != null)
             {
-
+                if (!IsPostBack)
+                {
+                    
+                }
+            }
+            else
+            {
+                Response.Redirect("IniciarSesion.aspx");
             }
         }
     }

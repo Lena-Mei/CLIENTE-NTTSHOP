@@ -22,11 +22,19 @@ namespace NTT_Shop.WebForms
 
 		protected void Page_Load(object sender, EventArgs e)
         {
-            if(!IsPostBack && Session["session-id"] != null)
+            if (Session["session-id"] != null)
             {
-				ProductoEscaparate();
-				
-			}
+                if (!IsPostBack)
+                {
+                    ProductoEscaparate();
+
+                }
+            }
+            else
+            {
+                Response.Redirect("IniciarSesion.aspx");
+            }
+            
 		}
 
 		private void ProductoEscaparate()
