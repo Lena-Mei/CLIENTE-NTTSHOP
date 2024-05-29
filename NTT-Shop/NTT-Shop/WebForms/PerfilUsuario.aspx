@@ -64,13 +64,17 @@
                 </div>
             </div>
         </div>
-        <div class="col-5 d-grid gap-2" style="margin-top: 10px;">
+        <div class="col-4 d-grid gap-2" style="margin-top: 10px;">
             <asp:Button runat="server" ID="btnActualizar" Text="Guardar" OnClick="btnActualizar_Click" class="btn btn-outline-success" />
         </div>
-        <div class="col-5 d-grid gap-2" style="margin-top: 10px;">
+        <div class="col-4 d-grid gap-2" style="margin-top: 10px;">
             <asp:Button runat="server" ID="btnCambiarC" Text="Cambiar Contraseña"  OnClick="btnCambiarC_Click1"  class="btn btn-outline-secondary"/>
         </div>
+          <div class="col-4 d-grid gap-2" style="margin-top: 10px;">
+      <asp:Button runat="server" ID="btnActCorreo" Text="Cambiar Correo"  OnClick="btnActCorreo_Click"  class="btn btn-outline-secondary"/>
+  </div>
     </div>
+
 
     <asp:Label runat="server" ID="lblCorrecto" Text="" Font-Bold="True" />
     <asp:Label runat="server" ID="lblValidacion" Text="" Font-Bold="True" />
