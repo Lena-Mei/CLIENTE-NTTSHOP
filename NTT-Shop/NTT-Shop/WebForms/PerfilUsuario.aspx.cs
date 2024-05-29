@@ -186,6 +186,10 @@ namespace NTT_Shop.WebForms
         {
             Response.Redirect("CambiarContrasenya.aspx");
         }
-       
+
+        protected void btnActCorreo_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ActCorreo.aspx");
+        }
     }
 }
