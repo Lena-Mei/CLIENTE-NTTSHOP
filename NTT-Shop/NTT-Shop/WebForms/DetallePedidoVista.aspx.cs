@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Net;
+using Newtonsoft.Json;
 
 namespace NTT_Shop.WebForms
 {
@@ -158,10 +159,123 @@ namespace NTT_Shop.WebForms
         protected void btnDevolver_Click(object sender, EventArgs e)
         {
             bool correcto = DevolverPedido();
+            SumarStock(int.Parse(lblidPedido.Text));
             if (correcto)
             {
                 Response.Redirect("DetallePedidoVista.aspx");
             }
+        }
+
+
+        private void SumarStock(int idPedido)
+        {
+            Usuario user = GetUsuario(int.Parse(Session["session-id"].ToString()));
+            Pedido ped = obtenerPedido(idPedido, user.IsoIdioma, user.IdRate);
+            Producto prod;
+            string error;
+            foreach (DetallePedido item in ped.detallePedido)
+            {
+                prod = item.producto;
+                prod.stock = prod.stock + item.unidades;
+                ActualizarProducto(prod, out error);
+            }
+        }
+
+        private Usuario GetUsuario(int? id)
+        {
+            Usuario usuario = new Usuario();
+            string url = generalUrl + "Usuario/getUsuario/" + id;
+            try
+            {
+                var httpRequest = (HttpWebRequest)WebRequest.Create(url);
+                httpRequest.Method = "GET";
+
+                var httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var resultado = streamReader.ReadToEnd();
+                    var json = JObject.Parse(resultado);
+                    usuario = json["idUsuario"].ToObject<Usuario>();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                usuario = null;
+            }
+            return usuario;
+        }
+        private bool ActualizarProducto(Producto producto, out string error)
+        {
+            error = "";
+            bool correcto = false;
+            var adminData = new { producto = producto };
+
+            string jsonDatos = JsonConvert.SerializeObject(adminData);
+            string url = generalUrl + "Producto/updateProducto";
+            try
+            {
+                var httpRequest = (HttpWebRequest)WebRequest.Create(url);
+                httpRequest.Method = "PUT";
+                httpRequest.ContentType = "application/json";
+                httpRequest.Accept = "application/json";
+
+                using (var streamWriter = new StreamWriter(httpRequest.GetRequestStream()))
+                {
+
+                    streamWriter.Write(jsonDatos);
+                }
+
+                var httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+                HttpStatusCode httpStatus = httpResponse.StatusCode;
+
+                if (httpStatus == HttpStatusCode.OK)
+                {
+                    correcto = true;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("400")) //BadRequest
+                {
+                    error = "Algún dato está vacío o es nulo.";
+
+                }
+                else if (ex.Message.Contains("404")) //NotFound
+                {
+
+                    error = "Algún dato introducido ya existe o es inválido.";
+                }
+            }
+            return correcto;
+        }
+        private Pedido obtenerPedido(int idPedido, string idioma, int idRate)
+        {
+            Pedido pedido = new Pedido();
+            try
+            {
+                string url = generalUrl + "Pedido/getPedido?id=" + idPedido + "&idioma=" + idioma + "&idRate=" + idRate;
+                var httpRequest = (HttpWebRequest)WebRequest.Create(url);
+                httpRequest.Method = "GET";
+
+                var httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var resultado = streamReader.ReadToEnd();
+                    var json = JObject.Parse(resultado);
+                    pedido = json["pedido"].ToObject<Pedido>();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return pedido;
         }
     }
 }

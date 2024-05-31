@@ -82,7 +82,7 @@
             <% }
                 if (idEstado == 2)
                 {%>
-            <asp:Label runat="server" ID="alerta2" class="alert alert-success">El Pedido está <strong>ANULADO</strong> por el Administrador.</asp:Label>
+            <asp:Label runat="server" ID="alerta2" class="alert alert-danger">El Pedido está <strong>ANULADO</strong> por el Administrador.</asp:Label>
             <% }
                 if (idEstado == 3)
                 {%>
